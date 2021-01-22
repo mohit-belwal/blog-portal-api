@@ -64,7 +64,7 @@ router.delete('/blogs/:id', auth, async (req, res)=>{
 })
 
 // Get all blogs of a user 
-// GET /blogs/?limit=2&skip=2
+// GET /blogs/?limit=2&page=2
 router.get('/blogs', auth, async (req, res)=>{
     const {limit, page} = req.query
 
@@ -85,7 +85,6 @@ router.get('/blogs', auth, async (req, res)=>{
         currentPage: page
         });
     } catch (e) {
-        console.log(e)
         res.status(500).send(e)
     }
 })
@@ -108,8 +107,7 @@ router.get('/blogs/:id', auth, async (req, res)=>{
 // Get all blogs present on the site 
 // GET /blogs/all/?limit=2&page=2
 router.get('/blogsAll', auth, async (req, res)=>{
-    const {limit, page=1} = req.query
-    console.log("Hello")
+    const {limit, page} = req.query
 
     try{
         const blogs = await Blog.find()
@@ -127,7 +125,6 @@ router.get('/blogsAll', auth, async (req, res)=>{
         currentPage: page
         });
     } catch(e){
-        console.log(e)
         res.status(500).send(e)
     }
 })
@@ -162,7 +159,7 @@ router.patch('/blogsAll/:id/like', auth, async (req, res)=>{
         }
     } catch (e) {
         console.log(e)
-        res.status(422).send(e)
+        res.status(500).send(e)
     }
 })
 
